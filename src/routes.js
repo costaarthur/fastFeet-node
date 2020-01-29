@@ -3,6 +3,8 @@ import { Router } from 'express';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 // novos \/
+import FastfeetSession from './app/controllers/FastfeetSession';
+
 import StudentController from './app/controllers/StudentController';
 import AdmController from './app/controllers/AdmController';
 
@@ -15,7 +17,10 @@ routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
 // project
+routes.post('/ffsessions', FastfeetSession.store);
+
 routes.post('/admsessions', AdmController.store);
+
 routes.get('/getstudent', StudentController.get);
 
 /* routes.get('/students/:id'),

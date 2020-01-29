@@ -1,7 +1,7 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-class Fastfeetadm extends Model {
+class Admin extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -29,4 +29,4 @@ class Fastfeetadm extends Model {
   }
 }
 
-export default Fastfeetadm;
+export default Admin;
