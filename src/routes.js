@@ -4,12 +4,14 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 // novos \/
 import FastfeetSession from './app/controllers/FastfeetSession';
+import RecipientController from './app/controllers/RecipientController';
 
 import StudentController from './app/controllers/StudentController';
 import AdmController from './app/controllers/AdmController';
 
 import authMiddleware from './app/middlewares/auth';
 import admMiddleware from './app/middlewares/authadm';
+import authff from './app/middlewares/authff';
 
 const routes = new Router();
 
@@ -29,6 +31,9 @@ routes.get('/getstudent', StudentController.get);
 
     return res.json({ message: `Hello ${id}}` });
   }; */
+
+routes.post('/recipients', authff, RecipientController.store);
+routes.put('/recipients', authff, RecipientController.update);
 
 routes.use(admMiddleware);
 routes.post('/students', StudentController.store);
