@@ -5,10 +5,20 @@ import AdmUser from '../app/models/AdmUser';
 import Student from '../app/models/Student';
 import FastfeetAdm from '../app/models/FastfeetAdm';
 import Recipient from '../app/models/Recipient';
+import Entregador from '../app/models/Entregador';
+import File from '../app/models/File';
 
 import databaseConfig from '../config/database';
 
-const models = [User, AdmUser, Student, FastfeetAdm, Recipient];
+const models = [
+  User,
+  AdmUser,
+  Student,
+  FastfeetAdm,
+  Recipient,
+  Entregador,
+  File,
+];
 
 class Database {
   constructor() {

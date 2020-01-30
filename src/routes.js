@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 // novos \/
 import FastfeetSession from './app/controllers/FastfeetSession';
 import RecipientController from './app/controllers/RecipientController';
+import FileController from './app/controllers/FileController';
 
 import StudentController from './app/controllers/StudentController';
 import AdmController from './app/controllers/AdmController';
@@ -38,9 +39,7 @@ routes.get('/getstudent', StudentController.get);
 routes.post('/recipients', authff, RecipientController.store);
 routes.put('/recipients', authff, RecipientController.update);
 
-routes.post('/files', authff, upload.single('file'), (req, res) => {
-  return res.json({ ok: true });
-});
+routes.post('/files', authff, upload.single('file'), FileController.store);
 
 routes.use(admMiddleware);
 routes.post('/students', StudentController.store);

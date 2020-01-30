@@ -1,32 +1,20 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('entregadores', {
+    return queryInterface.createTable('files', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      email: {
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      path: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-      },
-      nome: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      avatar_id: {
-        type: Sequelize.INTEGER,
-        // references: { model: 'files', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
-      },
-      provider: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -40,6 +28,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('entregadores');
+    return queryInterface.dropTable('files');
   },
 };
