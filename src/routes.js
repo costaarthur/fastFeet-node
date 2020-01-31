@@ -12,6 +12,9 @@ import FileController from './app/controllers/FileController';
 import StudentController from './app/controllers/StudentController';
 import AdmController from './app/controllers/AdmController';
 
+// // entregadores ////
+import EntController from './app/controllers/EntController';
+
 import authMiddleware from './app/middlewares/auth';
 import admMiddleware from './app/middlewares/authadm';
 import authff from './app/middlewares/authff';
@@ -40,6 +43,11 @@ routes.post('/recipients', authff, RecipientController.store);
 routes.put('/recipients', authff, RecipientController.update);
 
 routes.post('/files', authff, upload.single('file'), FileController.store);
+
+routes.get('/ents', authff, EntController.index);
+routes.post('/ents', authff, EntController.store);
+routes.put('/ents', authff, EntController.update);
+routes.delete('/ents', authff, EntController.delete);
 
 routes.use(admMiddleware);
 routes.post('/students', StudentController.store);

@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('entregadores', {
+    return queryInterface.createTable('ents', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,13 +15,6 @@ module.exports = {
       nome: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      avatar_id: {
-        type: Sequelize.INTEGER,
-        // references: { model: 'files', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
       },
       provider: {
         type: Sequelize.BOOLEAN,
@@ -40,6 +33,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('entregadores');
+    return queryInterface.dropTable('ents');
   },
 };
