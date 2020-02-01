@@ -15,7 +15,8 @@ class Ent extends Model {
     );
   }
 
-  // pertence ao model de file, um id de arquivo é armazenado no model de entregadores
+  // model de usuário pertence ao model de file,
+  // um id de arquivo é armazenado no model de entregadores
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id' });
   }
