@@ -6,7 +6,6 @@ class Ent extends Model {
       {
         email: Sequelize.STRING,
         nome: Sequelize.STRING,
-        avatar_id: Sequelize.STRING,
         provider: Sequelize.BOOLEAN,
       },
       {
