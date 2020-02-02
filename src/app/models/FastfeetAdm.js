@@ -22,6 +22,8 @@ class Admin extends Model {
         adm.password_hash = await bcrypt.hash(adm.password, 8);
       }
     });
+
+    return this;
   }
 
   checkPass(password) {

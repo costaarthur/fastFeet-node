@@ -13,6 +13,7 @@ class Ent extends Model {
         // freezeTableName: true,
       }
     );
+    return this;
   }
 
   // model de usuário pertence ao model de file,
