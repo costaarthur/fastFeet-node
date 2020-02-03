@@ -1,9 +1,20 @@
 import * as Yup from 'yup';
 import Ent from '../models/Ent';
+import File from '../models/File';
 
 class EntController {
   async index(req, res) {
-    const ent = await Ent.findAll();
+    const ent = await Ent.findAll({
+      include: [
+        // acrescenta além do retorno
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'], // quais atributos do 'avatar'
+        },
+      ],
+      attributes: ['id', 'email', 'nome'], // quais atributos que vão mostrar do 'ent'
+    });
 
     return res.json(ent);
   }

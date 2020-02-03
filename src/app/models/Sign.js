@@ -6,12 +6,12 @@ class Sign extends Model {
       {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
-        // url: {
-        //  type: Sequelize.VIRTUAL,
-        //  get() {
-        //    return `${process.env.APP_URL}/files/${this.path}`;
-        //   },
-        //    },
+        url: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            return `http://localhost:3339/signs/${this.path}`;
+          },
+        },
       },
       {
         sequelize,

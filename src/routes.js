@@ -47,6 +47,8 @@ routes.put('/recipients', authff, RecipientController.update);
 routes.post('/signs', authff, upload.single('sign'), SignController.store);
 routes.get('/encomendas', authff, EncomendaController.index);
 routes.post('/encomendas', authff, EncomendaController.store);
+routes.put('/encomendas', authff, EncomendaController.update);
+routes.delete('/encomendas', authff, EncomendaController.delete);
 /*
  ********* entregadores
  */
