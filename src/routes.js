@@ -15,6 +15,7 @@ import AdmController from './app/controllers/AdmController';
 
 // // entregadores ////
 import EntController from './app/controllers/EntController';
+// // encomenda ////
 import EncomendaController from './app/controllers/EncomendaController';
 
 import authMiddleware from './app/middlewares/auth';
@@ -45,6 +46,7 @@ routes.put('/recipients', authff, RecipientController.update);
  */
 routes.post('/signs', authff, upload.single('sign'), SignController.store);
 routes.get('/encomendas', authff, EncomendaController.index);
+routes.post('/encomendas', authff, EncomendaController.store);
 /*
  ********* entregadores
  */

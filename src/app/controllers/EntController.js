@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import Ent from '../models/Ent';
 
 class EntController {
@@ -8,6 +9,17 @@ class EntController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      nome: Yup.string().required(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
     const entExists = await Ent.findOne({
       where: { email: req.body.email },
     });
@@ -26,6 +38,16 @@ class EntController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      nome: Yup.string(),
+      email: Yup.string()
+        .email()
+        .required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
     // const { email } = req.body;
     const ent = await Ent.findOne({
       where: { email: req.body.email },
