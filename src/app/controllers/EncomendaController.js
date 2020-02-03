@@ -3,7 +3,7 @@ import Sign from '../models/Sign';
 
 class EncomendaController {
   async index(req, res) {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
 
     const encomendas = await Encomenda.findAll({
       where: { canceled_at: null },

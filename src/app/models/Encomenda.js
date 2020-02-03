@@ -24,6 +24,8 @@ class Encomenda extends Model {
   // um id de arquivo é armazenado no model de entregadores
   static associate(models) {
     this.belongsTo(models.Sign, { foreignKey: 'signature_id' });
+    this.belongsTo(models.Recipient, { foreignKey: 'recipient_id' });
+    this.belongsTo(models.Ent, { foreignKey: 'deliveryman_id' });
   }
 }
 

@@ -15,6 +15,7 @@ import AdmController from './app/controllers/AdmController';
 
 // // entregadores ////
 import EntController from './app/controllers/EntController';
+import EntFunctionController from './app/controllers/EntFunctionController';
 // // encomenda ////
 import EncomendaController from './app/controllers/EncomendaController';
 
@@ -49,6 +50,10 @@ routes.get('/encomendas', authff, EncomendaController.index);
 routes.post('/encomendas', authff, EncomendaController.store);
 routes.put('/encomendas', authff, EncomendaController.update);
 routes.delete('/encomendas', authff, EncomendaController.delete);
+// funções do entregador
+routes.get('/encomendas/:deliverymanId', EntfunctionController.index);
+routes.get('/encomendas/:deliverymanId/entregues', EntFunctionController.index);
+
 /*
  ********* entregadores
  */
