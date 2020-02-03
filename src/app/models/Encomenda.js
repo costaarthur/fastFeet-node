@@ -4,7 +4,6 @@ class Encomenda extends Model {
   static init(sequelize) {
     super.init(
       {
-        id: Sequelize.INTEGER,
         recipient_id: Sequelize.INTEGER,
         deliveryman_id: Sequelize.INTEGER,
         signature_id: Sequelize.INTEGER,
@@ -18,6 +17,7 @@ class Encomenda extends Model {
         // freezeTableName: true,
       }
     );
+    return this;
   }
 
   // model de usuário pertence ao model de file,

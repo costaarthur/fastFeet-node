@@ -7,11 +7,13 @@ import FastfeetAdm from '../app/models/FastfeetAdm';
 import Recipient from '../app/models/Recipient';
 import Ent from '../app/models/Ent';
 import File from '../app/models/File';
+import Encomenda from '../app/models/Encomenda';
+import Sign from '../app/models/Sign';
 
 import databaseConfig from '../config/database';
 
 // const models = [User, AdmUser, Student, FastfeetAdm, Recipient, Ent, File];
-const models = [FastfeetAdm, Recipient, Ent, File];
+const models = [FastfeetAdm, Recipient, Ent, File, Encomenda, Sign];
 // console.log(FastfeetAdm);
 // console.log(Recipient);
 // console.log(Ent);
