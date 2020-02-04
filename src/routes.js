@@ -50,9 +50,13 @@ routes.get('/encomendas', authff, EncomendaController.index);
 routes.post('/encomendas', authff, EncomendaController.store);
 routes.put('/encomendas', authff, EncomendaController.update);
 routes.delete('/encomendas', authff, EncomendaController.delete);
-// funções do entregador
-routes.get('/encomendas/:deliverymanId', EntfunctionController.index);
-routes.get('/encomendas/:deliverymanId/entregues', EntFunctionController.index);
+// entregador functions
+routes.get('/entfunctions/:deliverymanId', EntFunctionController.index);
+routes.put('/entfunctions', EntFunctionController.update);
+routes.get(
+  '/entfunctions/:deliverymanId/entregues',
+  EntFunctionController.index
+);
 
 /*
  ********* entregadores

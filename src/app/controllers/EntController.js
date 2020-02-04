@@ -86,7 +86,7 @@ class EntController {
     if (!ent) {
       return res.status(400).json({ error: 'Email does not exists.' });
     }
-    const delEnt = await Ent.delete(ent);
+    const delEnt = await ent.delete(req.body);
     return res.json(delEnt);
   }
 }
