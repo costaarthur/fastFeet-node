@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import Encomenda from '../models/Encomenda';
 import Sign from '../models/Sign';
 
@@ -31,6 +32,16 @@ class EncomendaController {
   }
 
   async store(req, res) {
+    const schema = Yup.object().shape({
+      id: Yup.number(),
+      recipient_id: Yup.number().required(),
+      deliveryman_id: Yup.number().required(),
+      product: Yup.string().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
     const {
       id,
       recipient_id,
@@ -53,6 +64,17 @@ class EncomendaController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      id: Yup.number().required(),
+      recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
+      signature_id: Yup.number(),
+      product: Yup.string(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
     const encomenda = await Encomenda.findOne({
       where: { id: req.body.id },
       include: [
@@ -97,8 +119,8 @@ class EncomendaController {
     if (!encomenda) {
       return res.status(400).json({ error: 'Encomenda does not exists.' });
     }
-    const { id, product } = await Encomenda.delete(req.body);
-    return res.json({ id, product });
+    const deleteEncomenda = await Encomenda.delete(encomenda);
+    return res.json(deleteEncomenda);
   }
 }
 
