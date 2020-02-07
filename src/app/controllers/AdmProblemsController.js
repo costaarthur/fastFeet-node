@@ -15,7 +15,7 @@ class AdmProblemsController {
     // get array with delivery_id problems
     let i;
     const idNumbers = [];
-    for (i = 0; i < problems.length; i++) {
+    for (i = 0; i < problems.length; i += 1) {
       idNumbers.push(problems[i].delivery_id);
       Encomenda.findAll({
         where: { id: problems[i].delivery_id },
@@ -44,6 +44,35 @@ class AdmProblemsController {
   } */
     // console.log(problems[i].delivery_id);
     return res.json(encomendasWithProblems);
+  }
+
+  async delete(req, res) {
+    const { problemId } = req.params;
+    const findDeliveryId = await DeliveryProblems.findOne({
+      where: { id: problemId },
+    });
+
+    // check Id has problem
+    if (!findDeliveryId) {
+      return res.status(400).json({ error: 'This is not an Id with problem.' });
+    }
+
+    const deliveryId = findDeliveryId.delivery_id;
+    console.log(deliveryId);
+
+    const encomenda = await Encomenda.findOne({
+      where: { id: deliveryId },
+    });
+
+    // check delivery exists
+    if (!encomenda) {
+      return res.status(400).json({ error: 'Encomenda does not exists.' });
+    }
+
+    encomenda.canceled_at = new Date();
+    await encomenda.save();
+    // const deleteEncomenda = await Encomenda.delete(encomenda);
+    return res.json(encomenda);
   }
 }
 export default new AdmProblemsController();

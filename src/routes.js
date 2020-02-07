@@ -74,12 +74,16 @@ routes.delete('/ents', authff, EntController.delete);
  */
 // admin problems
 routes.get('/encomendas/problems', authff, AdmProblemsController.index);
-// routes.get('/encomendas/admin/problems/:problemId', authff, AdmProblemsController.index);
+routes.delete(
+  '/encomendas/:problemId/cancel-delivery',
+  authff,
+  AdmProblemsController.delete
+);
 
 // entregagor problems
 // routes.get('/encomendas/:encomendaId/problems', EntProblemsController.index);
 routes.post('/encomendas/:encomendaId/problems', EntProblemsController.store);
-// routes.get('/encomendas/problems', EntProblemsController.index);
+routes.get('/encomendas/:encomendaId/problems', EntProblemsController.index);
 
 routes.use(admMiddleware);
 routes.post('/students', StudentController.store);

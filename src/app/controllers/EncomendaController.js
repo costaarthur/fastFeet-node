@@ -112,15 +112,19 @@ class EncomendaController {
   }
 
   async delete(req, res) {
+    const { id } = req.body;
     const encomenda = await Encomenda.findOne({
-      where: { id: req.body.id },
+      where: { id },
     });
 
     if (!encomenda) {
       return res.status(400).json({ error: 'Encomenda does not exists.' });
     }
-    const deleteEncomenda = await Encomenda.delete(encomenda);
-    return res.json(deleteEncomenda);
+
+    encomenda.canceled_at = new Date();
+    await encomenda.save();
+
+    return res.json(encomenda);
   }
 }
 
