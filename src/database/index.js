@@ -9,11 +9,20 @@ import Ent from '../app/models/Ent';
 import File from '../app/models/File';
 import Encomenda from '../app/models/Encomenda';
 import Sign from '../app/models/Sign';
+import DeliveryProblems from '../app/models/DeliveryProblems';
 
 import databaseConfig from '../config/database';
 
 // const models = [User, AdmUser, Student, FastfeetAdm, Recipient, Ent, File];
-const models = [FastfeetAdm, Recipient, Ent, File, Encomenda, Sign];
+const models = [
+  FastfeetAdm,
+  Recipient,
+  Ent,
+  File,
+  Encomenda,
+  Sign,
+  DeliveryProblems,
+];
 // console.log(FastfeetAdm);
 // console.log(Recipient);
 // console.log(Ent);

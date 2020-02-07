@@ -18,6 +18,11 @@ import EntController from './app/controllers/EntController';
 import EntFunctionController from './app/controllers/EntFunctionController';
 // // encomenda ////
 import EncomendaController from './app/controllers/EncomendaController';
+import EntreguesController from './app/controllers/EntreguesController';
+
+// // problems ////
+import AdmProblemsController from './app/controllers/AdmProblemsController';
+import EntProblemsController from './app/controllers/EntProblemsController';
 
 import authMiddleware from './app/middlewares/auth';
 import admMiddleware from './app/middlewares/authadm';
@@ -53,10 +58,7 @@ routes.delete('/encomendas', authff, EncomendaController.delete);
 // entregador functions
 routes.get('/entfunctions/:deliverymanId', EntFunctionController.index);
 routes.put('/entfunctions', EntFunctionController.update);
-routes.get(
-  '/entfunctions/:deliverymanId/entregues',
-  EntFunctionController.index
-);
+routes.get('/entfunctions/:deliverymanId/entregues', EntreguesController.index);
 
 /*
  ********* entregadores
@@ -66,6 +68,18 @@ routes.get('/ents', authff, EntController.index);
 routes.post('/ents', authff, EntController.store);
 routes.put('/ents', authff, EntController.update);
 routes.delete('/ents', authff, EntController.delete);
+
+/*
+ ********** delivery problems
+ */
+// admin problems
+routes.get('/encomendas/problems', authff, AdmProblemsController.index);
+// routes.get('/encomendas/admin/problems/:problemId', authff, AdmProblemsController.index);
+
+// entregagor problems
+// routes.get('/encomendas/:encomendaId/problems', EntProblemsController.index);
+routes.post('/encomendas/:encomendaId/problems', EntProblemsController.store);
+// routes.get('/encomendas/problems', EntProblemsController.index);
 
 routes.use(admMiddleware);
 routes.post('/students', StudentController.store);
