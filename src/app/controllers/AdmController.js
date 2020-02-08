@@ -5,6 +5,7 @@ import authAdm from '../../config/authadm';
 
 class AdmController {
   async store(req, res) {
+    // create session
     const { email, password } = req.body;
 
     const admuser = await Admuser.findOne({ where: { email } });

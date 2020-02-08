@@ -48,8 +48,9 @@ class EntFunctionController {
       return res.status(400).json({ error: 'Validation fails!' });
     }
     // find encomenda
+    const { id } = req.body;
     const encomenda = await Encomenda.findOne({
-      where: { id: req.body.id },
+      where: { id },
     });
     // check encomenda exists
     if (!encomenda) {

@@ -58,7 +58,7 @@ class AdmProblemsController {
     }
 
     const deliveryId = findDeliveryId.delivery_id;
-    console.log(deliveryId);
+    // console.log(deliveryId);
 
     const encomenda = await Encomenda.findOne({
       where: { id: deliveryId },
