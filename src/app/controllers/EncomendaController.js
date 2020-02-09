@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import Encomenda from '../models/Encomenda';
+import Ent from '../models/Ent';
 import Sign from '../models/Sign';
+
+import Mail from '../../lib/Mail';
 
 class EncomendaController {
   async index(req, res) {
@@ -51,6 +54,23 @@ class EncomendaController {
       start_date,
       end_date,
     } = await Encomenda.create(req.body);
+    /* const entregador = await Ent.findByPk(req.body.deliveryman_id, {
+      include: [
+        {
+          model: Ent,
+          attributes: ['nome', 'email'],
+        },
+      ],
+    }); */
+
+    // find ent
+    const entregador2 = await Ent.findByPk(req.body.deliveryman_id);
+
+    await Mail.sendMail({
+      to: `${entregador2.nome} <${entregador2.email}>`,
+      subject: 'New delivery',
+      text: 'You have a new delivery.',
+    });
 
     return res.json({
       id,
