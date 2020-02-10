@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Encomenda from '../models/Encomenda';
 import Ent from '../models/Ent';
 import Sign from '../models/Sign';
@@ -53,23 +55,47 @@ class EncomendaController {
       canceled_at,
       start_date,
       end_date,
-    } = await Encomenda.create(req.body);
+    } = req.body;
+
+    await Encomenda.create({
+      id,
+      recipient_id,
+      deliveryman_id,
+      product,
+      canceled_at,
+      start_date,
+      end_date,
+    });
+    console.log(res.body.id);
     /* const entregador = await Ent.findByPk(req.body.deliveryman_id, {
-      include: [
-        {
-          model: Ent,
-          attributes: ['nome', 'email'],
-        },
-      ],
-    }); */
+  include: [
+    {
+      model: Ent,
+      attributes: ['nome', 'email'],
+    },
+  ],
+}); */
 
     // find ent
     const entregador2 = await Ent.findByPk(req.body.deliveryman_id);
+    console.log('entrei');
 
+    /* const encomenda = await Encomenda.findOne({
+      where: { id: Encomenda.id },
+    }); */
+
+    console.log('entrei');
     await Mail.sendMail({
-      to: `${entregador2.nome} <${entregador2.email}>`,
-      subject: 'New delivery',
-      text: 'You have a new delivery.',
+      to: `${deliveryman_id} <${entregador2.email}>`,
+      subject: 'Nova encomenda',
+      template: 'newdelivery',
+      context: {
+        deliveryman: entregador2.nome,
+        product,
+        date: format(encomenda.created_at, "'dia' dd 'de' MMMM', às' H:mm'h'", {
+          locale: pt,
+        }),
+      },
     });
 
     return res.json({
