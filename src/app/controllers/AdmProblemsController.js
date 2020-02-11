@@ -14,29 +14,28 @@ class AdmProblemsController {
     // const deliveryWithProblem = await Encomenda.findAll({
     //  where: { id: }
     const problems = await DeliveryProblems.findAll({
-      attributes: ['delivery_id'],
-    });
-
-    // get array with delivery_id problems
-    let i;
-    const idNumbers = [];
-    for (i = 0; i < problems.length; i += 1) {
-      idNumbers.push(problems[i].delivery_id);
-      Encomenda.findAll({
-        where: { id: problems[i].delivery_id },
-      });
-    }
-
-    const encomendasWithProblems = await Encomenda.findAll({
-      where: { id: idNumbers },
+      attributes: ['description'],
       include: [
         {
-          model: DeliveryProblems,
-          as: 'descriptioner',
-          attributes: ['description'],
+          model: Encomenda,
         },
       ],
     });
+
+    // // get array with delivery_id problems
+    // let i;
+    // const idNumbers = [];
+    // for (i = 0; i < problems.length; i += 1) {
+    //   idNumbers.push(problems[i].delivery_id);
+    //   Encomenda.findAll({
+    //     where: { id: problems[i].delivery_id },
+    //   });
+    // }
+
+    // const encomendasWithProblems = await Encomenda.findAll({
+    //   where: { id: idNumbers },
+    //   /*  */
+    // });
     // console.log(problems[1].delivery_id);
 
     /* const separaNumber = problems.map(n => {
@@ -48,7 +47,8 @@ class AdmProblemsController {
     return res.json(separaNumber);
   } */
     // console.log(problems[i].delivery_id);
-    return res.json(encomendasWithProblems);
+
+    return res.json(problems);
   }
 
   async delete(req, res) {

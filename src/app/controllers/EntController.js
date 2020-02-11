@@ -72,17 +72,23 @@ class EntController {
       ],
     });
 
+    console.log('AVATAR::::::::::', ent.avatar);
     if (!ent) {
       return res.status(400).json({ error: 'Email does not exists.' });
     }
 
     const { id, email, nome, avatar_id } = await ent.update(req.body);
 
+    const { url } = await File.findOne({
+      where: { id: avatar_id },
+    });
+
     return res.json({
       id,
       email,
       nome,
       avatar_id,
+      avatar: url,
     });
   }
 

@@ -1,4 +1,5 @@
 // import { isBefore } from 'date-fns';
+import { Op } from 'sequelize';
 import Encomenda from '../models/Encomenda';
 import Ent from '../models/Ent';
 
@@ -19,7 +20,7 @@ class EntreguesController {
       where: {
         deliveryman_id: deliverymanId,
         canceled_at: null,
-        signature_id: { $ne: null },
+        signature_id: { [Op.not]: null },
         // end_date: isBefore(Encomenda.end_date, new Date()),
       },
     });
