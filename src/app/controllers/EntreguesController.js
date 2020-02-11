@@ -20,7 +20,7 @@ class EntreguesController {
         deliveryman_id: deliverymanId,
         canceled_at: null,
         signature_id: { $ne: null },
-        // end_date: isBefore(end_date, new Date()),
+        // end_date: isBefore(Encomenda.end_date, new Date()),
       },
     });
     // .sort({ createdAt: 'desc' })

@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
-import { format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+// import { format } from 'date-fns';
+// import pt from 'date-fns/locale/pt';
 import Encomenda from '../models/Encomenda';
 import Ent from '../models/Ent';
+import Recipient from '../models/Recipient';
 import Sign from '../models/Sign';
 
 import Mail from '../../lib/Mail';
@@ -47,6 +48,20 @@ class EncomendaController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
+
+    // check deliveryman exists
+    const entregador = await Ent.findByPk(req.body.deliveryman_id);
+
+    if (!entregador) {
+      return res.status(400).json({ error: 'Deliveryman does not exists.' });
+    }
+    // check recipient exists
+    const recipient = await Recipient.findByPk(req.body.recipient_id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient does not exists.' });
+    }
+
     const {
       id,
       recipient_id,
@@ -66,7 +81,6 @@ class EncomendaController {
       start_date,
       end_date,
     });
-    console.log(res.body.id);
     /* const entregador = await Ent.findByPk(req.body.deliveryman_id, {
   include: [
     {
@@ -78,13 +92,11 @@ class EncomendaController {
 
     // find ent
     const entregador2 = await Ent.findByPk(req.body.deliveryman_id);
-    console.log('entrei');
 
     /* const encomenda = await Encomenda.findOne({
       where: { id: Encomenda.id },
     }); */
 
-    console.log('entrei');
     await Mail.sendMail({
       to: `${deliveryman_id} <${entregador2.email}>`,
       subject: 'Nova encomenda',
@@ -92,9 +104,9 @@ class EncomendaController {
       context: {
         deliveryman: entregador2.nome,
         product,
-        date: format(encomenda.created_at, "'dia' dd 'de' MMMM', às' H:mm'h'", {
+        /*   date: format(encomenda.created_at, "'dia' dd 'de' MMMM', às' H:mm'h'", {
           locale: pt,
-        }),
+        }), */
       },
     });
 

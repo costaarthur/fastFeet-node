@@ -29,13 +29,13 @@ class AdmProblemsController {
 
     const encomendasWithProblems = await Encomenda.findAll({
       where: { id: idNumbers },
-      /*  include: [
+      include: [
         {
           model: DeliveryProblems,
           as: 'descriptioner',
           attributes: ['description'],
         },
-      ], */
+      ],
     });
     // console.log(problems[1].delivery_id);
 
@@ -63,7 +63,7 @@ class AdmProblemsController {
     }
 
     const deliveryId = findDeliveryId.delivery_id;
-    console.log(deliveryId);
+    // console.log(deliveryId);
 
     const encomenda = await Encomenda.findOne({
       where: { id: deliveryId },
@@ -79,7 +79,7 @@ class AdmProblemsController {
 
     // find ent
     const entregador = await Ent.findByPk(deliveryId);
-    console.log(entregador.id);
+    // console.log(entregador.id);
     await Mail.sendMail({
       to: `${entregador.nome} <${entregador.email}>`,
       subject: 'Encomenda cancelada',

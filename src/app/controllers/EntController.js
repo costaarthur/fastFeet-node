@@ -62,6 +62,14 @@ class EntController {
     // const { email } = req.body;
     const ent = await Ent.findOne({
       where: { email: req.body.email },
+      include: [
+        // acrescenta além do retorno
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'], // quais atributos do 'avatar'
+        },
+      ],
     });
 
     if (!ent) {
