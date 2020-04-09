@@ -44,6 +44,7 @@ routes.get('/getstudent', StudentController.get);
 /*
  ********* destinatários
  */
+routes.get('/recipients', authff, RecipientController.index);
 routes.post('/recipients', authff, RecipientController.store);
 routes.put('/recipients', authff, RecipientController.update);
 

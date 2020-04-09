@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 // import { format } from 'date-fns';
 // import pt from 'date-fns/locale/pt';
@@ -10,10 +11,13 @@ import Mail from '../../lib/Mail';
 
 class EncomendaController {
   async index(req, res) {
-    const { page = 1 } = req.query;
+    const { page = 1, q } = req.query;
 
     const encomendas = await Encomenda.findAll({
-      where: { canceled_at: null },
+      where: q
+        ? { canceled_at: null, product: { [Op.iLike]: q } }
+        : { canceled_at: null },
+
       attributes: [
         'id',
         'recipient_id',
@@ -25,7 +29,7 @@ class EncomendaController {
       ],
       order: ['start_date'],
       limit: 20,
-      offset: (page - 1) * 20,
+      offset: (page - 1) * 10,
       include: [
         {
           model: Sign,
@@ -81,20 +85,20 @@ class EncomendaController {
       end_date,
     });
     /* const entregador = await Ent.findByPk(req.body.deliveryman_id, {
-  include: [
-    {
-      model: Ent,
-      attributes: ['nome', 'email'],
-    },
-  ],
+include: [
+  {
+    model: Ent,
+    attributes: ['nome', 'email'],
+  },
+],
 }); */
 
     // find ent
     const entregador2 = await Ent.findByPk(req.body.deliveryman_id);
 
     /* const encomenda = await Encomenda.findOne({
-      where: { id: Encomenda.id },
-    }); */
+    where: { id: Encomenda.id },
+  }); */
 
     await Mail.sendMail({
       to: `${deliveryman_id} <${entregador2.email}>`,
@@ -104,8 +108,8 @@ class EncomendaController {
         deliveryman: entregador2.nome,
         product,
         /*   date: format(encomenda.created_at, "'dia' dd 'de' MMMM', às' H:mm'h'", {
-          locale: pt,
-        }), */
+        locale: pt,
+      }), */
       },
     });
 

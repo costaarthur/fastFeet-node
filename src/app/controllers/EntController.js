@@ -1,10 +1,14 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import Ent from '../models/Ent';
 import File from '../models/File';
 
 class EntController {
   async index(req, res) {
+    const { q } = req.query;
+
     const ent = await Ent.findAll({
+      where: q ? { nome: { [Op.iLike]: q } } : { provider: false },
       include: [
         // acrescenta além do retorno
         {
