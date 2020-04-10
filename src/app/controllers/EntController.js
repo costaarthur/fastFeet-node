@@ -76,7 +76,6 @@ class EntController {
       ],
     });
 
-    console.log('AVATAR::::::::::', ent.avatar);
     if (!ent) {
       return res.status(400).json({ error: 'Email does not exists.' });
     }
