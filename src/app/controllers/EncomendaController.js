@@ -6,6 +6,7 @@ import Encomenda from '../models/Encomenda';
 import Ent from '../models/Ent';
 import Recipient from '../models/Recipient';
 import Sign from '../models/Sign';
+import File from '../models/File';
 
 import Mail from '../../lib/Mail';
 
@@ -14,9 +15,7 @@ class EncomendaController {
     const { page = 1, q } = req.query;
 
     const encomendas = await Encomenda.findAll({
-      where: q
-        ? { canceled_at: null, product: { [Op.iLike]: q } }
-        : { canceled_at: null },
+      where: q ? { product: { [Op.iLike]: q } } : { id: { [Op.ne]: null } },
 
       attributes: [
         'id',
@@ -24,16 +23,43 @@ class EncomendaController {
         'deliveryman_id',
         'signature_id',
         'product',
+        'canceled_at',
         'start_date',
         'end_date',
       ],
-      order: ['start_date'],
-      limit: 20,
+      order: ['id'],
+      // order: ['start_date'],
+      limit: 10,
       offset: (page - 1) * 10,
       include: [
         {
           model: Sign,
           attributes: ['name', 'path', 'url'],
+        },
+        {
+          model: Recipient,
+          attributes: [
+            'id',
+            'email',
+            'nome',
+            'rua',
+            'numero',
+            'complemento',
+            'estado',
+            'cidade',
+            'cep',
+          ],
+        },
+        {
+          model: Ent,
+          attributes: ['id', 'nome'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'name', 'path', 'url'],
+            },
+          ],
         },
       ],
     });
