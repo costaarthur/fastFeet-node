@@ -209,6 +209,7 @@ include: [
     }
 
     encomenda.canceled_at = new Date();
+
     await encomenda.save();
 
     return res.json(encomenda);
