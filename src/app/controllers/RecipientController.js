@@ -11,6 +11,7 @@ class RecipientController {
     if (q) {
       recipient = await Recipient.findAll({
         where: { nome: { [Op.iLike]: q } },
+        order: ['id'],
         attributes: [
           'id',
           'nome',
@@ -34,6 +35,7 @@ class RecipientController {
           'cidade',
           'cep',
         ],
+        order: ['id'],
       });
     }
 

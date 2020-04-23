@@ -9,6 +9,7 @@ class EntController {
 
     const ent = await Ent.findAll({
       where: q ? { nome: { [Op.iLike]: q } } : { provider: false },
+      order: ['id'],
       include: [
         // acrescenta além do retorno
         {
