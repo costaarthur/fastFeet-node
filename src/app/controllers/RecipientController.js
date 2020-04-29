@@ -21,6 +21,7 @@ class RecipientController {
           'estado',
           'cidade',
           'cep',
+          'email',
         ],
       });
     } else {
@@ -34,6 +35,7 @@ class RecipientController {
           'estado',
           'cidade',
           'cep',
+          'email',
         ],
         order: ['id'],
       });
@@ -95,9 +97,6 @@ class RecipientController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      email: Yup.string()
-        .required()
-        .email(),
       nome: Yup.string(),
       rua: Yup.string(),
       numero: Yup.number(),
@@ -105,21 +104,22 @@ class RecipientController {
       estado: Yup.string(),
       cidade: Yup.string(),
       cep: Yup.number(),
+      email: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
     const { email } = req.body;
+    // const { id } = req.query;
 
     const recipient = await Recipient.findOne({ where: { email } });
 
     if (!recipient) {
-      return res.status(400).json({ error: 'Email does not exists.' });
+      return res.status(400).json({ error: 'Recipient does not exists.' });
     }
 
     const {
-      id,
       nome,
       rua,
       numero,
@@ -127,11 +127,10 @@ class RecipientController {
       estado,
       cidade,
       cep,
+      // email,
     } = await recipient.update(req.body);
 
     return res.json({
-      id,
-      email,
       nome,
       rua,
       numero,
@@ -139,8 +138,21 @@ class RecipientController {
       estado,
       cidade,
       cep,
+      // email,
       admffId: req.admffId,
     });
+  }
+
+  async delete(req, res) {
+    const recipient = await Recipient.findOne({
+      where: { id: req.body.id },
+    });
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Recipient does not exists.' });
+    }
+    const delRecipient = await recipient.destroy(req.body);
+    return res.json(delRecipient);
   }
 }
 

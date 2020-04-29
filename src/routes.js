@@ -47,6 +47,7 @@ routes.get('/getstudent', StudentController.get);
 routes.get('/recipients', authff, RecipientController.index);
 routes.post('/recipients', authff, RecipientController.store);
 routes.put('/recipients', authff, RecipientController.update);
+routes.delete('/recipients', authff, RecipientController.delete);
 
 /*
  ********* encomendas

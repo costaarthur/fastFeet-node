@@ -14,7 +14,7 @@ class AdmProblemsController {
     // const deliveryWithProblem = await Encomenda.findAll({
     //  where: { id: }
     const problems = await DeliveryProblems.findAll({
-      attributes: ['description'],
+      attributes: ['id', 'description'],
       include: [
         {
           model: Encomenda,

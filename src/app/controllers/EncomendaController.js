@@ -13,6 +13,7 @@ import Mail from '../../lib/Mail';
 class EncomendaController {
   async index(req, res) {
     const { page = 1, q } = req.query;
+    console.log(q);
 
     const encomendas = await Encomenda.findAll({
       where: q ? { product: { [Op.iLike]: q } } : { id: { [Op.ne]: null } },
@@ -63,6 +64,8 @@ class EncomendaController {
         },
       ],
     });
+
+    // console.log(encomendas);
 
     return res.json(encomendas);
   }
@@ -203,7 +206,6 @@ include: [
     const encomenda = await Encomenda.findOne({
       where: { id },
     });
-
     if (!encomenda) {
       return res.status(400).json({ error: 'Encomenda does not exists.' });
     }
