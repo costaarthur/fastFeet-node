@@ -5,11 +5,13 @@ import File from '../models/File';
 
 class EntController {
   async index(req, res) {
-    const { q } = req.query;
+    const { page = 1, q } = req.query;
 
     const ent = await Ent.findAll({
       where: q ? { nome: { [Op.iLike]: q } } : { provider: false },
       order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
       include: [
         // acrescenta além do retorno
         {

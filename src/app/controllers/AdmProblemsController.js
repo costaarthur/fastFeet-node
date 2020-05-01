@@ -10,10 +10,13 @@ import Mail from '../../lib/Mail';
 
 class AdmProblemsController {
   async index(req, res) {
-    // const { page = 1 } = req.query;
+    const { page = 1 } = req.query;
     // const deliveryWithProblem = await Encomenda.findAll({
     //  where: { id: }
     const problems = await DeliveryProblems.findAll({
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
       attributes: ['id', 'description'],
       include: [
         {

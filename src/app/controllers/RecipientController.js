@@ -4,43 +4,27 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { q } = req.query;
+    const { page = 1, q } = req.query;
 
-    let recipient;
+    // let recipient;
 
-    if (q) {
-      recipient = await Recipient.findAll({
-        where: { nome: { [Op.iLike]: q } },
-        order: ['id'],
-        attributes: [
-          'id',
-          'nome',
-          'rua',
-          'numero',
-          'complemento',
-          'estado',
-          'cidade',
-          'cep',
-          'email',
-        ],
-      });
-    } else {
-      recipient = await Recipient.findAll({
-        attributes: [
-          'id',
-          'nome',
-          'rua',
-          'numero',
-          'complemento',
-          'estado',
-          'cidade',
-          'cep',
-          'email',
-        ],
-        order: ['id'],
-      });
-    }
-
+    const recipient = await Recipient.findAll({
+      where: q ? { nome: { [Op.iLike]: q } } : { id: { [Op.ne]: null } },
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
+      attributes: [
+        'id',
+        'nome',
+        'rua',
+        'numero',
+        'complemento',
+        'estado',
+        'cidade',
+        'cep',
+        'email',
+      ],
+    });
     return res.json(recipient);
   }
 
