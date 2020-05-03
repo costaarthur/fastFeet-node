@@ -5,10 +5,12 @@ import File from '../models/File';
 
 class EntController {
   async index(req, res) {
-    const { page = 1, q } = req.query;
+    const { page = 1, filter } = req.query;
 
     const ent = await Ent.findAll({
-      where: q ? { nome: { [Op.iLike]: q } } : { provider: false },
+      where: filter
+        ? { nome: { [Op.iLike]: `%${filter}%` } }
+        : { provider: false },
       order: ['id'],
       limit: 10,
       offset: (page - 1) * 10,
@@ -66,15 +68,13 @@ class EntController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
     }
-    // const { email } = req.body;
     const ent = await Ent.findOne({
       where: { email: req.body.email },
       include: [
-        // acrescenta além do retorno
         {
           model: File,
           as: 'avatar',
-          attributes: ['name', 'path', 'url'], // quais atributos do 'avatar'
+          attributes: ['name', 'path', 'url'],
         },
       ],
     });
@@ -107,7 +107,6 @@ class EntController {
       return res.status(400).json({ error: 'Email does not exists.' });
     }
     const delEnt = await ent.destroy(req.body);
-    // const delEnt = await ent.delete(req.body);
     return res.json(delEnt);
   }
 }

@@ -25,32 +25,6 @@ class AdmProblemsController {
       ],
     });
 
-    // // get array with delivery_id problems
-    // let i;
-    // const idNumbers = [];
-    // for (i = 0; i < problems.length; i += 1) {
-    //   idNumbers.push(problems[i].delivery_id);
-    //   Encomenda.findAll({
-    //     where: { id: problems[i].delivery_id },
-    //   });
-    // }
-
-    // const encomendasWithProblems = await Encomenda.findAll({
-    //   where: { id: idNumbers },
-    //   /*  */
-    // });
-    // console.log(problems[1].delivery_id);
-
-    /* const separaNumber = problems.map(n => {
-      const [, number] = n.split(':');
-      const value = number;
-      return { value };
-    });
-
-    return res.json(separaNumber);
-  } */
-    // console.log(problems[i].delivery_id);
-
     return res.json(problems);
   }
 

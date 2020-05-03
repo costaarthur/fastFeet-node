@@ -4,12 +4,14 @@ import Recipient from '../models/Recipient';
 
 class RecipientController {
   async index(req, res) {
-    const { page = 1, q } = req.query;
+    const { page = 1, filter } = req.query;
 
     // let recipient;
 
     const recipient = await Recipient.findAll({
-      where: q ? { nome: { [Op.iLike]: q } } : { id: { [Op.ne]: null } },
+      where: filter
+        ? { nome: { [Op.iLike]: `%${filter}%` } }
+        : { id: { [Op.ne]: null } },
       order: ['id'],
       limit: 10,
       offset: (page - 1) * 10,

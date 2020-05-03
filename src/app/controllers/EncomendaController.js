@@ -12,11 +12,12 @@ import Mail from '../../lib/Mail';
 
 class EncomendaController {
   async index(req, res) {
-    const { page = 1, q } = req.query;
-    console.log(q);
+    const { page = 1, filter } = req.query;
 
     const encomendas = await Encomenda.findAll({
-      where: q ? { product: { [Op.iLike]: q } } : { id: { [Op.ne]: null } },
+      where: filter
+        ? { product: { [Op.iLike]: `%${filter}%` } }
+        : { id: { [Op.ne]: null } },
 
       attributes: [
         'id',
